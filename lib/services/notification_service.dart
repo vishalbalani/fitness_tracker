@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationServices {
@@ -31,7 +33,6 @@ class NotificationServices {
 
   // Show a notification with the given details
   Future<void> showNotification({
-    required int id,
     required String title,
     required String body,
   }) async {
@@ -46,7 +47,7 @@ class NotificationServices {
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await _flutterLocalNotificationsPlugin.show(
-      id,
+      Random().nextInt(9999999),
       title,
       body,
       platformChannelSpecifics,

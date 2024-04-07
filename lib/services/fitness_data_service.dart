@@ -2,13 +2,25 @@ import 'dart:developer';
 
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
+import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:health/health.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'fitness_data_service.g.dart';
 
 @riverpod
-Future<void> fitnessDataService(FitnessDataServiceRef ref) async {
+Stream<FitnessDataModel?> periodicFitnessDataService(
+    PeriodicFitnessDataServiceRef ref) async* {
+  final periodicStream =
+      Stream.periodic(const Duration(seconds: 10), (index) => index);
+
+  await for (var _ in periodicStream) {    
+    yield ref.read(fitnessDataProvider);
+  }
+}
+
+@riverpod
+Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
   final Health health = Health();
 
   try {
@@ -21,6 +33,7 @@ Future<void> fitnessDataService(FitnessDataServiceRef ref) async {
 
     if (!requested) {
       log("Authorization request was not successful");
+      return null;
     }
 
     DateTime endDate = DateTime.now();
@@ -64,6 +77,12 @@ Future<void> fitnessDataService(FitnessDataServiceRef ref) async {
           break;
       }
     }
+    final notificationService = NotificationServices();
+
+    notificationService.showNotification(
+      title: totalSteps.toString(),
+      body: 'This is a test notification.',
+    );
 
     ref.read(fitnessDataProvider.notifier).updateState(
           FitnessDataModel(
@@ -72,7 +91,13 @@ Future<void> fitnessDataService(FitnessDataServiceRef ref) async {
             totalCalories: totalCalories,
           ),
         );
+    return FitnessDataModel(
+      totalSteps: totalSteps,
+      totalDistance: totalDistance,
+      totalCalories: totalCalories,
+    );
   } catch (e) {
     log("Error fetching fitness data: $e");
+    return null;
   }
 }

@@ -10,6 +10,16 @@
     <uses-permission android:name="android.permission.health.WRITE_DISTANCE"/>
     <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED"/>
     <uses-permission android:name="android.permission.health.WRITE_ACTIVE_CALORIES_BURNED"/>
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_ENERGY_BURNED"/>
+    <uses-permission android:name="android.permission.health.WRITE_ACTIVE_ENERGY_BURNED"/>
+
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
 
     <application
         android:label="fitness_tracker"
@@ -34,6 +44,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <service 
+            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"/>
 
         <!-- Requesting access to sensitive permissions -->
         <activity-alias

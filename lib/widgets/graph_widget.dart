@@ -1,23 +1,25 @@
 import 'package:fitness_tracker/constants/colors.dart';
 import 'package:fitness_tracker/constants/size.dart';
 import 'package:fitness_tracker/model/radial_graph_model.dart';
-import 'package:fitness_tracker/providers/fitness_data_provider.dart';
 import 'package:fitness_tracker/widgets/app_style.dart';
 import 'package:fitness_tracker/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class RadialBarGraphWidget extends ConsumerWidget {
-  const RadialBarGraphWidget({
-    super.key,
-  });
+class RadialBarGraphWidget extends StatelessWidget {
+  const RadialBarGraphWidget(
+      {super.key,
+      required this.totalSteps,
+      required this.totalKms,
+      required this.totalCalories});
+
+  final int totalSteps;
+  final double totalKms;
+  final double totalCalories;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final fitnessData = ref.watch(fitnessDataProvider);
-
+  Widget build(BuildContext context) {
     return Column(
       children: [
         SfCircularChart(
@@ -31,13 +33,11 @@ class RadialBarGraphWidget extends ConsumerWidget {
               maximumValue: 100,
               dataSource: <RadialBarGraphModel>[
                 RadialBarGraphModel(
-                    (fitnessData?.totalCalories ?? 0) * 100 / 1000,
-                    'Calories',
-                    kLightRed),
-                RadialBarGraphModel(fitnessData?.totalDistance ?? 0 * 100 / 10,
-                    'Total Kms', kLightPurple),
-                RadialBarGraphModel(fitnessData?.totalSteps ?? 0 * 100 / 10000,
-                    'Steps', kLightBlue),
+                    totalCalories * 100 / 1000, 'Calories', kLightRed),
+                RadialBarGraphModel(
+                    totalKms * 100 / 10, 'Total Kms', kLightPurple),
+                RadialBarGraphModel(
+                    totalSteps * 100 / 10000, 'Steps', kLightBlue),
               ],
               xValueMapper: (RadialBarGraphModel data, _) => data.xData,
               yValueMapper: (RadialBarGraphModel data, _) => data.yData,

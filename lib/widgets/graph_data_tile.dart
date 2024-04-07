@@ -21,18 +21,19 @@ class GraphDataWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         dataTile(context, totalCalories.toString(), "Kcal"),
-        dataTile(context, totalSteps.toString(), "Steps"),
+        dataTile(context, totalSteps.toString(), "Steps", size: 3),
         dataTile(context, totalKms.toString(), "Kms"),
       ],
     );
   }
 
-  Widget dataTile(BuildContext context, String data, String unit) {
+  Widget dataTile(BuildContext context, String data, String unit,
+      {double size = 2}) {
     return Column(
       children: [
         TextWidget(
             text: data,
-            style: appstyle(getHeight(context, 2), FontWeight.w600,
+            style: appstyle(getHeight(context, size), FontWeight.w600,
                 color: kLightBlue)),
         SizedBox(width: getWidth(context, 1.5)),
         TextWidget(

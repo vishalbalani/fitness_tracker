@@ -1,6 +1,6 @@
 import 'package:fitness_tracker/constants/colors.dart';
 import 'package:fitness_tracker/services/auth/login.dart';
-import 'package:fitness_tracker/utils/permission_handel.dart';
+import 'package:fitness_tracker/utils/permission_handle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

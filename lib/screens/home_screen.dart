@@ -1,6 +1,7 @@
 import 'package:fitness_tracker/constants/colors.dart';
 import 'package:fitness_tracker/constants/size.dart';
 import 'package:fitness_tracker/services/fitness_data_service.dart';
+import 'package:fitness_tracker/utils/snake_bar.dart';
 import 'package:fitness_tracker/widgets/app_style.dart';
 import 'package:fitness_tracker/widgets/custom_button.dart';
 import 'package:fitness_tracker/widgets/custom_text.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
-import 'package:fitness_tracker/utils/permission_handel.dart';
+import 'package:fitness_tracker/utils/permission_handle.dart';
 import 'package:fitness_tracker/widgets/background_handler_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -40,10 +41,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const RadialBarGraphWidget(),
+              RadialBarGraphWidget(
+                totalSteps: fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
+                totalKms: fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
+                totalCalories:
+                    fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
+              ),
               SizedBox(height: getHeight(context, 5)),
               Card(
-                  color: Colors.black.withOpacity(0.9),
+                  color: kBlack,
                   elevation: 5,
                   margin:
                       EdgeInsets.symmetric(horizontal: getWidth(context, 4)),
@@ -55,7 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         TextWidget(
                             text: "Today's Progress",
                             style: appstyle(
-                                getHeight(context, 3), FontWeight.bold,
+                                getHeight(context, 2.8), FontWeight.bold,
                                 color: kOffWhite)),
                         SizedBox(height: getHeight(context, 2)),
                         GraphDataWidget(
@@ -76,6 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               CustomButton(
                 onTap: () {
                   ref.read(fitnessDataServiceProvider);
+                  showSnackBar(context, "Stats Refreshed Successfully!");
                 },
                 width: getWidth(context, 50),
                 height: getHeight(context, 7),

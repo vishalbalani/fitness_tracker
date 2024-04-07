@@ -20,7 +20,6 @@ Future<void> requestPermissionForBackgroundTask() async {
   if (notificationPermissionStatus != NotificationPermission.granted) {
     await FlutterForegroundTask.requestNotificationPermission();
   }
-
 }
 
 Future<void> notificationInitialization() async {

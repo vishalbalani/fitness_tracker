@@ -77,10 +77,8 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
 
     if ((current - previous) >= 1 && previousTotalSteps != 0) {
       notificationService.showNotification(
-        title:
-            "Amazing progress! You've just reached another milestone of ${(totalSteps ~/ 100) * 100} steps",
-        body: 'Total Distance: ${totalDistance.toStringAsFixed(2)} km\n'
-            'Total Calories Burned: ${totalCalories.toStringAsFixed(2)} Calories',
+        title: "You're on fire! Milestone achieved! 🔥",
+        body: '${(totalSteps ~/ 100) * 100} steps and counting!',
       );
       await prefs.setInt('totalSteps', totalSteps);
     }

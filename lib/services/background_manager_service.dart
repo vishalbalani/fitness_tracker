@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:isolate';
 
+import 'package:fitness_tracker/providers/stream_controller.dart';
 import 'package:fitness_tracker/services/fitness_data_service.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,12 +20,17 @@ class BackgroundTaskHandler extends TaskHandler {
 
     final providerContainer = ProviderContainer();
     providerContainer.read(fitnessDataServiceProvider);
+    providerContainer
+        .read(streamControllerProvider.notifier)
+        .updateState(false);
+    providerContainer.dispose();
   }
 
   @override
   void onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
     final providerContainer = ProviderContainer();
     providerContainer.read(fitnessDataServiceProvider);
+    providerContainer.dispose();
   }
 
   @override

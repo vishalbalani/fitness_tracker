@@ -17,16 +17,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    requestPermissionForBackgroundTask();
-    notificationInitialization();
     healthPermission();
+    notificationInitialization();
+    requestPermissionForBackgroundTask();
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.read(periodicFitnessDataServiceProvider);
     final fitnessData = ref.watch(fitnessDataProvider);
-    // ref.read(periodicFitnessDataServiceProvider);
 
     return BackgroundHandlerWidget(
       child: Scaffold(

@@ -2,15 +2,22 @@ import 'dart:developer';
 
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
+import 'package:fitness_tracker/providers/stream_controller.dart';
 import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:health/health.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'fitness_data_service.g.dart';
 
 @riverpod
 Stream<void> periodicFitnessDataService(
     PeriodicFitnessDataServiceRef ref) async* {
+  // final toContinue = ref.watch(streamControllerProvider);
+  // if (!toContinue) {
+  //   return;
+  // }
+  log("updated");
   final periodicStream =
       Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
 
@@ -21,21 +28,11 @@ Stream<void> periodicFitnessDataService(
 
 @riverpod
 Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
   final Health health = Health();
+  final notificationService = NotificationServices();
 
   try {
-    // Request authorization
-    bool requested = await health.requestAuthorization([
-      HealthDataType.STEPS,
-      HealthDataType.DISTANCE_DELTA,
-      HealthDataType.ACTIVE_ENERGY_BURNED
-    ]);
-
-    if (!requested) {
-      log("Authorization request was not successful");
-      return null;
-    }
-
     DateTime endDate = DateTime.now();
     DateTime startDate =
         DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
@@ -77,28 +74,33 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
           break;
       }
     }
-    final notificationService = NotificationServices();
 
-    notificationService.showNotification(
-      title:
-          "Amazing progress! You've just reached another milestone on your fitness journey, surpassing $totalSteps steps. Keep stepping towards your goals",
-      body: 'Total Distance: ${totalDistance.toStringAsFixed(2)} km'
-          'Total Calories Burned: ${totalCalories.toStringAsFixed(2)} Calories',
-    );
+    int previousTotalSteps = prefs.getInt('totalSteps') ?? 0;
 
-    log("Total Steps: $totalSteps");
+    int previous = (previousTotalSteps ~/ 100);
+    int current = (totalSteps ~/ 100);
+
+    if ((current - previous) >= 1) {
+      notificationService.showNotification(
+        title:
+            "Amazing progress! You've just reached another milestone of ${(totalSteps ~/ 100) * 100} steps",
+        body: 'Total Distance: ${totalDistance.toStringAsFixed(2)} km\n'
+            'Total Calories Burned: ${totalCalories.toStringAsFixed(2)} Calories',
+      );
+    }
+
     ref.read(fitnessDataProvider.notifier).updateState(FitnessDataModel(
           totalSteps: totalSteps,
           totalDistance: totalDistance,
           totalCalories: totalCalories,
         ));
+    await prefs.setInt('totalSteps', totalSteps);
     return FitnessDataModel(
       totalSteps: totalSteps,
       totalDistance: totalDistance,
       totalCalories: totalCalories,
     );
   } catch (e) {
-    log("Error fetching fitness data: $e");
     return null;
   }
 }

@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
-import 'package:fitness_tracker/providers/stream_controller.dart';
 import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:health/health.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,21 +7,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'fitness_data_service.g.dart';
 
-@riverpod
-Stream<void> periodicFitnessDataService(
-    PeriodicFitnessDataServiceRef ref) async* {
-  // final toContinue = ref.watch(streamControllerProvider);
-  // if (!toContinue) {
-  //   return;
-  // }
-  log("updated");
-  final periodicStream =
-      Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
+// @riverpod
+// Stream<void> periodicFitnessDataService(
+//     PeriodicFitnessDataServiceRef ref) async* {
+//   final toContinue = ref.watch(streamControllerProvider);
+//   if (!toContinue) {
+//     return;
+//   }
+//   final periodicStream =
+//       Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
 
-  await for (var _ in periodicStream) {
-    ref.read(fitnessDataServiceProvider);
-  }
-}
+//   await for (var _ in periodicStream) {
+//     ref.read(fitnessDataServiceProvider);
+//   }
+// }
 
 @riverpod
 Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
@@ -80,13 +76,14 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
     int previous = (previousTotalSteps ~/ 100);
     int current = (totalSteps ~/ 100);
 
-    if ((current - previous) >= 1) {
+    if ((current - previous) >= 1 && previousTotalSteps != 0) {
       notificationService.showNotification(
         title:
             "Amazing progress! You've just reached another milestone of ${(totalSteps ~/ 100) * 100} steps",
         body: 'Total Distance: ${totalDistance.toStringAsFixed(2)} km\n'
             'Total Calories Burned: ${totalCalories.toStringAsFixed(2)} Calories',
       );
+      await prefs.setInt('totalSteps', totalSteps);
     }
 
     ref.read(fitnessDataProvider.notifier).updateState(FitnessDataModel(
@@ -94,7 +91,6 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
           totalDistance: totalDistance,
           totalCalories: totalCalories,
         ));
-    await prefs.setInt('totalSteps', totalSteps);
     return FitnessDataModel(
       totalSteps: totalSteps,
       totalDistance: totalDistance,

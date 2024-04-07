@@ -21,6 +21,7 @@ Future<void> requestPermissionForBackgroundTask() async {
   if (notificationPermissionStatus != NotificationPermission.granted) {
     await FlutterForegroundTask.requestNotificationPermission();
   }
+
 }
 
 Future<void> notificationInitialization() async {
@@ -29,9 +30,4 @@ Future<void> notificationInitialization() async {
   await notificationService.initLocalNotifications();
 
   await FlutterForegroundTask.requestNotificationPermission();
-}
-
-Future<void> healthPermission() async {
-  await Permission.activityRecognition.request();
-  await Permission.location.request();
 }

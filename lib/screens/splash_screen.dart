@@ -1,12 +1,24 @@
 import 'package:fitness_tracker/services/auth/login.dart';
+import 'package:fitness_tracker/utils/permission_handel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
+  void initState() {
+    requestPermissionForBackgroundTask();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final AsyncValue<bool> isUserLoggedIn =
         ref.watch(loginServiceProvider(context));
 

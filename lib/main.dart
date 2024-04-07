@@ -5,11 +5,9 @@ import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  tz.initializeTimeZones();
 
   _initialization();
   _notification();
@@ -41,5 +39,4 @@ _notification() async {
   final notificationService = NotificationServices();
   await notificationService.requestNotificationPermission();
   await notificationService.initLocalNotifications();
-  // notificationService.scheduleNotification();
 }

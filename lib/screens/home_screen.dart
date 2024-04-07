@@ -1,5 +1,6 @@
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
 import 'package:fitness_tracker/services/fitness_data_service.dart';
+import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,7 +49,17 @@ class HomeScreen extends ConsumerWidget {
                 ),
           const SizedBox(height: 16),
           FloatingActionButton(
-            onPressed: () => ref.read(fitnessDataServiceProvider),
+            onPressed: () {
+              final notificationService = NotificationServices();
+
+              // Show a test notification
+              notificationService.showNotification(
+                id: 0,
+                title: 'Test Notification',
+                body: 'This is a test notification.',
+              );
+              ref.read(fitnessDataServiceProvider);
+            },
             child: const Icon(Icons.refresh),
           ),
         ],

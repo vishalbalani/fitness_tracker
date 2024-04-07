@@ -14,11 +14,32 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
+  # Google Fit
+  health: ^10.2.0
+
+  # Firebase
+  firebase_core: ^2.28.0
+
+  # Fonts
+  google_fonts: ^6.1.0
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  #state managment
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+
+  build_runner:
+  riverpod_generator:
+  riverpod_lint:
+  custom_lint:
 
 flutter:
   uses-material-design: true

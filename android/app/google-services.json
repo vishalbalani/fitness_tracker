@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "405347612503",
+    "project_id": "fitness-tracker-2862c",
+    "storage_bucket": "fitness-tracker-2862c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405347612503:android:3a52f8a37f7a5bcd377012",
+        "android_client_info": {
+          "package_name": "com.googlefit.fitness_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405347612503-h2d30551kb00kahre6accedr4mp1u0ht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.googlefit.fitness_tracker",
+            "certificate_hash": "85e099a45cb919a05cd652387480c0c7c03ff7b9"
+          }
+        },
+        {
+          "client_id": "405347612503-ln0j2kjjev82e34cnadufkjpg5239e2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4pcnEelcXC61oQaOes54bJUVacEB1fpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405347612503-ln0j2kjjev82e34cnadufkjpg5239e2b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "405347612503-8p9vhmmm0cg3gqcvm0sp2ifekvi7i8q7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fitnessTracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

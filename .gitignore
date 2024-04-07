@@ -3,6 +3,9 @@
 *.log
 *.pyc
 *.swp
+*.g.dart
+*.freezed.dart
+key.txt
 .DS_Store
 .atom/
 .buildlog/

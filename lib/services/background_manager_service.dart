@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:isolate';
 
 import 'package:fitness_tracker/services/fitness_data_service.dart';
@@ -23,7 +22,6 @@ class BackgroundTaskHandler extends TaskHandler {
 
   @override
   void onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
-
     final providerContainer = ProviderContainer();
     providerContainer.read(fitnessDataServiceProvider);
   }
@@ -35,7 +33,7 @@ class BackgroundTaskHandler extends TaskHandler {
 
   @override
   void onNotificationButtonPressed(String id) {
-    log('onNotificationButtonPressed >> $id');
+    _sendPort?.send('onNotificationButtonPressed');
   }
 
   @override

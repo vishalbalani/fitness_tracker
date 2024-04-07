@@ -38,7 +38,7 @@ class BackgroundHandlerWidget extends StatelessWidget {
               allowWakeLock: false,
               allowWifiLock: false,
             ),
-            notificationTitle: 'Foreground Service is running',
+            notificationTitle: 'Fitness Tracker is running',
             notificationText: 'Tap to return to the app',
             callback: backgroundCallback,
             child: child));

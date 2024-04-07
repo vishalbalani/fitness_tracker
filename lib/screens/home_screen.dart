@@ -22,7 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // ref.read(periodicFitnessDataServiceProvider);
+    ref.read(periodicFitnessDataServiceProvider);
     final fitnessData = ref.watch(fitnessDataProvider);
 
     return BackgroundHandlerWidget(

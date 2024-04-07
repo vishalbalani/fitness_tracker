@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
 import 'package:fitness_tracker/services/notification_service.dart';
@@ -7,20 +9,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'fitness_data_service.g.dart';
 
-// @riverpod
-// Stream<void> periodicFitnessDataService(
-//     PeriodicFitnessDataServiceRef ref) async* {
-//   final toContinue = ref.watch(streamControllerProvider);
-//   if (!toContinue) {
-//     return;
-//   }
-//   final periodicStream =
-//       Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
+@riverpod
+Stream<void> periodicFitnessDataService(
+    PeriodicFitnessDataServiceRef ref) async* {
+  log("herrrr");
+  final periodicStream =
+      Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
 
-//   await for (var _ in periodicStream) {
-//     ref.read(fitnessDataServiceProvider);
-//   }
-// }
+  await for (var _ in periodicStream) {
+    ref.read(fitnessDataServiceProvider);
+  }
+}
 
 @riverpod
 Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {

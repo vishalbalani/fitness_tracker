@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_tracker/firebase_options.dart';
 import 'package:fitness_tracker/route.dart';
-import 'package:fitness_tracker/utils/permission_handel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

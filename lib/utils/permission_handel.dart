@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 Future<void> requestPermissionForBackgroundTask() async {
   if (!Platform.isAndroid) {

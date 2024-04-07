@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'fitness_data_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class FitnessData extends _$FitnessData {
   @override
   FitnessDataModel? build() {

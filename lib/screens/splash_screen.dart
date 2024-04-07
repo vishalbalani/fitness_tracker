@@ -1,3 +1,4 @@
+import 'package:fitness_tracker/constants/colors.dart';
 import 'package:fitness_tracker/services/auth/login.dart';
 import 'package:fitness_tracker/utils/permission_handel.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     return isUserLoggedIn.when(data: (data) {
       if (!data) {
         return Scaffold(
+            backgroundColor: kBackground,
             body: Center(
-          child: FloatingActionButton(
-              onPressed: () {
-                ref.read(loginServiceProvider(context));
-              },
-              child: const Text('Login')),
-        ));
+              child: FloatingActionButton(
+                  onPressed: () {
+                    ref.read(loginServiceProvider(context));
+                  },
+                  child: const Text('Login')),
+            ));
       }
 
       return const SizedBox();

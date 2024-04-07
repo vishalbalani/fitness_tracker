@@ -1,0 +1,81 @@
+import 'package:fitness_tracker/constants/colors.dart';
+import 'package:fitness_tracker/constants/size.dart';
+import 'package:fitness_tracker/model/radial_graph_model.dart';
+import 'package:fitness_tracker/providers/fitness_data_provider.dart';
+import 'package:fitness_tracker/widgets/app_style.dart';
+import 'package:fitness_tracker/widgets/custom_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
+class RadialBarGraphWidget extends ConsumerWidget {
+  const RadialBarGraphWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final fitnessData = ref.watch(fitnessDataProvider);
+
+    return Column(
+      children: [
+        SfCircularChart(
+          series: <RadialBarSeries<RadialBarGraphModel, String>>[
+            RadialBarSeries<RadialBarGraphModel, String>(
+              trackColor: kLightGray,
+              trackOpacity: 0.2,
+              gap: "15%",
+              radius: "80%",
+              innerRadius: "40%",
+              maximumValue: 100,
+              dataSource: <RadialBarGraphModel>[
+                RadialBarGraphModel(
+                    (fitnessData?.totalCalories ?? 0) * 100 / 1000,
+                    'Calories',
+                    kLightRed),
+                RadialBarGraphModel(fitnessData?.totalDistance ?? 0 * 100 / 10,
+                    'Total Kms', kLightPurple),
+                RadialBarGraphModel(fitnessData?.totalSteps ?? 0 * 100 / 10000,
+                    'Steps', kLightBlue),
+              ],
+              xValueMapper: (RadialBarGraphModel data, _) => data.xData,
+              yValueMapper: (RadialBarGraphModel data, _) => data.yData,
+              pointColorMapper: (RadialBarGraphModel data, _) => data.color,
+              useSeriesColor: true,
+              cornerStyle: CornerStyle.bothCurve,
+            ),
+          ],
+        ),
+        graphLabel(context),
+      ],
+    );
+  }
+
+  Widget graphLabel(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        dataTile(context, FontAwesomeIcons.gripfire, kLightRed, "Cal"),
+        SizedBox(width: getWidth(context, 5)),
+        dataTile(context, Icons.directions_walk, kLightPurple, "Km"),
+        SizedBox(width: getWidth(context, 5)),
+        dataTile(context, FontAwesomeIcons.shoePrints, kLightBlue, "Steps"),
+      ],
+    );
+  }
+
+  Widget dataTile(
+      BuildContext context, IconData icon, Color iconColor, String unit) {
+    return Row(
+      children: [
+        FaIcon(icon, color: iconColor),
+        SizedBox(width: getWidth(context, 1.8)),
+        TextWidget(
+            text: unit,
+            style: appstyle(getHeight(context, 2.2), FontWeight.bold,
+                color: kOffWhite))
+      ],
+    );
+  }
+}

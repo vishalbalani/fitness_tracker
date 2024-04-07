@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:fitness_tracker/services/notification_service.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> requestPermissionForBackgroundTask() async {
   if (!Platform.isAndroid) {
@@ -22,7 +23,6 @@ Future<void> requestPermissionForBackgroundTask() async {
   }
 }
 
-
 Future<void> notificationInitialization() async {
   final notificationService = NotificationServices();
   await notificationService.requestNotificationPermission();
@@ -31,3 +31,7 @@ Future<void> notificationInitialization() async {
   await FlutterForegroundTask.requestNotificationPermission();
 }
 
+Future<void> healthPermission() async {
+  await Permission.activityRecognition.request();
+  await Permission.location.request();
+}

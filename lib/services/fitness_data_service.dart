@@ -9,13 +9,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'fitness_data_service.g.dart';
 
 @riverpod
-Stream<FitnessDataModel?> periodicFitnessDataService(
+Stream<void> periodicFitnessDataService(
     PeriodicFitnessDataServiceRef ref) async* {
   final periodicStream =
-      Stream.periodic(const Duration(seconds: 10), (index) => index);
+      Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
 
-  await for (var _ in periodicStream) {    
-    yield ref.read(fitnessDataProvider);
+  await for (var _ in periodicStream) {
+    ref.read(fitnessDataServiceProvider);
   }
 }
 
@@ -80,17 +80,18 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
     final notificationService = NotificationServices();
 
     notificationService.showNotification(
-      title: totalSteps.toString(),
-      body: 'This is a test notification.',
+      title:
+          "Amazing progress! You've just reached another milestone on your fitness journey, surpassing $totalSteps steps. Keep stepping towards your goals",
+      body: 'Total Distance: ${totalDistance.toStringAsFixed(2)} km'
+          'Total Calories Burned: ${totalCalories.toStringAsFixed(2)} Calories',
     );
 
-    ref.read(fitnessDataProvider.notifier).updateState(
-          FitnessDataModel(
-            totalSteps: totalSteps,
-            totalDistance: totalDistance,
-            totalCalories: totalCalories,
-          ),
-        );
+    log("Total Steps: $totalSteps");
+    ref.read(fitnessDataProvider.notifier).updateState(FitnessDataModel(
+          totalSteps: totalSteps,
+          totalDistance: totalDistance,
+          totalCalories: totalCalories,
+        ));
     return FitnessDataModel(
       totalSteps: totalSteps,
       totalDistance: totalDistance,

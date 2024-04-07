@@ -1,3 +1,4 @@
+import 'package:fitness_tracker/services/fitness_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,22 +17,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     requestPermissionForBackgroundTask();
     notificationInitialization();
+    healthPermission();
   }
 
   @override
   Widget build(BuildContext context) {
     final fitnessData = ref.watch(fitnessDataProvider);
+    // ref.read(periodicFitnessDataServiceProvider);
+
     return BackgroundHandlerWidget(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Flutter Foreground Task'),
+          title: const Text('Fitness Tracker'),
           centerTitle: true,
         ),
-        body: (fitnessData == null)
-            ? const CircularProgressIndicator()
-            : RichText(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FloatingActionButton(
+                onPressed: () {
+                  ref.read(fitnessDataServiceProvider);
+                },
+                child: const Icon(Icons.refresh)),
+            if (fitnessData != null)
+              RichText(
                 text: TextSpan(
                   style: const TextStyle(color: Colors.black),
                   children: [
@@ -61,6 +73,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ],
                 ),
               ),
+          ],
+        ),
       ),
     );
   }

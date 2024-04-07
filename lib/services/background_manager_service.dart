@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:isolate';
 
 import 'package:fitness_tracker/services/fitness_data_service.dart';
@@ -33,7 +34,7 @@ class BackgroundTaskHandler extends TaskHandler {
 
   @override
   void onNotificationButtonPressed(String id) {
-    _sendPort?.send('onNotificationButtonPressed');
+    log('onNotificationButtonPressed >> $id');
   }
 
   @override

@@ -12,8 +12,9 @@ Fitness Tracker is a Flutter application designed to track and display user heal
 - **User-friendly Interface**: Offer a user-friendly interface with intuitive navigation and visually appealing design.
 
 ## Screenshots
-
-
+| ![Splash Screen](/screenshots/splash_screnn.jpg) | ![Home Screen](/screenshots/home.jpg) | ![Notification](/screenshots/notification.jpg) |
+|:--:|:--:|:--:|
+| *Splash Screen* | *Home Screen* | *Millstone Notification* |
 ## Getting Started
 
 ### Prerequisites

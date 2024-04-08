@@ -43,17 +43,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         ),
       );
     }, loading: () {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: kBackground,
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 20),
-              Text('Loading...'),
-            ],
-          ),
+          child: Image.asset('assets/logo.png'),
         ),
       );
     });

@@ -68,14 +68,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ]),
                 SizedBox(height: getHeight(context, 4)),
-                ProgressIndicatorWidget(
-                  totalSteps: fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
-                  totalKms:
-                      fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
-                  totalCalories:
-                      fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
-                ),
-                SizedBox(height: getHeight(context, 2)),
                 ProgressDataTile(
                   totalSteps: fitnessDataNullCheck
                       ? '0'
@@ -86,6 +78,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   totalCalories: fitnessDataNullCheck
                       ? '0'
                       : fitnessData.totalCalories.toStringAsFixed(2),
+                ),
+                SizedBox(height: getHeight(context, 2)),
+                ProgressIndicatorWidget(
+                  totalSteps: fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
+                  totalKms:
+                      fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
+                  totalCalories:
+                      fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
                 ),
               ],
             ),

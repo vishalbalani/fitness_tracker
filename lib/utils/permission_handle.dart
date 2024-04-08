@@ -24,8 +24,5 @@ Future<void> requestPermissionForBackgroundTask() async {
 
 Future<void> notificationInitialization() async {
   final notificationService = NotificationServices();
- // await notificationService.requestNotificationPermission();
   await notificationService.initLocalNotifications();
-
- // await FlutterForegroundTask.requestNotificationPermission();
 }

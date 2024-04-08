@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
@@ -29,7 +28,6 @@ Future<FitnessDataModel?> fitnessDataService(
   final notificationService = NotificationServices();
 
   try {
-    log("hit");
     if (fromApp) {
       bool isSuccess = await health.requestAuthorization([
         HealthDataType.STEPS,

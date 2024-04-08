@@ -1,4 +1,5 @@
 import 'package:fitness_tracker/constants/colors.dart';
+import 'package:fitness_tracker/constants/icons.dart';
 import 'package:fitness_tracker/constants/size.dart';
 import 'package:fitness_tracker/model/radial_graph_model.dart';
 import 'package:fitness_tracker/widgets/app_style.dart';
@@ -62,11 +63,11 @@ class RadialBarGraphWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        dataTile(context, FontAwesomeIcons.gripfire, kLightRed, "Cal"),
+        dataTile(context, kCalories, kLightRed, "Cal"),
         SizedBox(width: getWidth(context, 5)),
-        dataTile(context, Icons.directions_walk, kLightPurple, "Km"),
+        dataTile(context, kDistance, kLightPurple, "Km"),
         SizedBox(width: getWidth(context, 5)),
-        dataTile(context, FontAwesomeIcons.shoePrints, kLightBlue, "Steps"),
+        dataTile(context, kStep, kLightBlue, "Steps"),
       ],
     );
   }

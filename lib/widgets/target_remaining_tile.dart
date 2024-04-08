@@ -4,6 +4,8 @@ import 'package:fitness_tracker/widgets/app_style.dart';
 import 'package:fitness_tracker/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
+//Unused file in the project
+
 class TargetRemainingTile extends StatelessWidget {
   const TargetRemainingTile(
       {super.key,

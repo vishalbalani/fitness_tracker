@@ -1,4 +1,5 @@
 import 'package:fitness_tracker/constants/colors.dart';
+import 'package:fitness_tracker/constants/icons.dart';
 import 'package:fitness_tracker/constants/size.dart';
 import 'package:fitness_tracker/services/auth/logout.dart';
 import 'package:fitness_tracker/services/fitness_data_service.dart';
@@ -69,7 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       icon: const Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Icon(
-                          Icons.refresh,
+                          kRefresh,
                           color: kOffWhite,
                         ),
                       ),

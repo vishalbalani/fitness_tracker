@@ -25,15 +25,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     return isUserLoggedIn.when(data: (data) {
       if (!data) {
-        return Scaffold(
-            backgroundColor: kBackground,
-            body: Center(
-              child: FloatingActionButton(
-                  onPressed: () {
-                    ref.read(loginServiceProvider(context));
-                  },
-                  child: const Text('Login')),
-            ));
+        return const SizedBox();
       }
 
       return const SizedBox();
@@ -52,6 +44,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       );
     }, loading: () {
       return const Scaffold(
+        backgroundColor: kBackground,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

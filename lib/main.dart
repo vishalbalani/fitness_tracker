@@ -15,7 +15,6 @@ Future<void> main() async {
 
 
   await Permission.activityRecognition.request();
-  await Permission.location.request();
 
   _lockOrientation();
 

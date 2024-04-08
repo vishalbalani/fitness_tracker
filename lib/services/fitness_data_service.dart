@@ -80,8 +80,8 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
         title: "You're on fire! Milestone achieved! 🔥",
         body: '${(totalSteps ~/ 100) * 100} steps and counting!',
       );
-      await prefs.setInt('totalSteps', totalSteps);
     }
+    await prefs.setInt('totalSteps', totalSteps);
 
     ref.read(fitnessDataProvider.notifier).updateState(FitnessDataModel(
           totalSteps: totalSteps,

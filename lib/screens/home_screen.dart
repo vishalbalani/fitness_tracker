@@ -5,8 +5,9 @@ import 'package:fitness_tracker/utils/snake_bar.dart';
 import 'package:fitness_tracker/widgets/app_style.dart';
 import 'package:fitness_tracker/widgets/custom_button.dart';
 import 'package:fitness_tracker/widgets/custom_text.dart';
-import 'package:fitness_tracker/widgets/graph_data_tile.dart';
+import 'package:fitness_tracker/widgets/progress_data_tile.dart';
 import 'package:fitness_tracker/widgets/graph_widget.dart';
+import 'package:fitness_tracker/widgets/target_remaining_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +25,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
+    ref.read(fitnessDataServiceProvider);
     super.initState();
     notificationInitialization();
   }
@@ -47,38 +49,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 totalCalories:
                     fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
               ),
-              SizedBox(height: getHeight(context, 5)),
-              Card(
-                  color: kBlack,
-                  elevation: 5,
-                  margin:
-                      EdgeInsets.symmetric(horizontal: getWidth(context, 4)),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: getHeight(context, 2)),
-                    child: Column(
-                      children: [
-                        TextWidget(
-                            text: "Today's Progress",
-                            style: appstyle(
-                                getHeight(context, 2.8), FontWeight.bold,
-                                color: kOffWhite)),
-                        SizedBox(height: getHeight(context, 2)),
-                        GraphDataWidget(
-                          totalSteps: fitnessDataNullCheck
-                              ? '0'
-                              : fitnessData.totalSteps.toString(),
-                          totalKms: fitnessDataNullCheck
-                              ? '0'
-                              : fitnessData.totalDistance.toStringAsFixed(2),
-                          totalCalories: fitnessDataNullCheck
-                              ? '0'
-                              : fitnessData.totalCalories.toStringAsFixed(2),
-                        ),
-                      ],
-                    ),
-                  )),
-              SizedBox(height: getHeight(context, 6)),
+              SizedBox(height: getHeight(context, 4)),
+              ProgressDataTile(
+                totalSteps: fitnessDataNullCheck
+                    ? '0'
+                    : fitnessData.totalSteps.toString(),
+                totalKms: fitnessDataNullCheck
+                    ? '0'
+                    : fitnessData.totalDistance.toStringAsFixed(2),
+                totalCalories: fitnessDataNullCheck
+                    ? '0'
+                    : fitnessData.totalCalories.toStringAsFixed(2),
+              ),
+              SizedBox(height: getHeight(context, 1)),
+              TargetRemainingTile(
+                totalSteps: fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
+                totalKms: fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
+                totalCalories:
+                    fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
+              ),
+              SizedBox(height: getHeight(context, 2)),
               CustomButton(
                 onTap: () {
                   ref.read(fitnessDataServiceProvider);

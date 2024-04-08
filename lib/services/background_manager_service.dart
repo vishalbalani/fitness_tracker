@@ -17,14 +17,14 @@ class BackgroundTaskHandler extends TaskHandler {
     _sendPort = sendPort;
 
     final providerContainer = ProviderContainer();
-    providerContainer.read(fitnessDataServiceProvider);
+    providerContainer.read(fitnessDataServiceProvider(false));
     providerContainer.dispose();
   }
 
   @override
   void onRepeatEvent(DateTime timestamp, SendPort? sendPort) async {
     final providerContainer = ProviderContainer();
-    providerContainer.read(fitnessDataServiceProvider);
+    providerContainer.read(fitnessDataServiceProvider(false));
     providerContainer.dispose();
   }
 

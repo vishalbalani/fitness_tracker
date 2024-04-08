@@ -21,31 +21,37 @@ class RadialBarGraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      
       children: [
-        SfCircularChart(
-          series: <RadialBarSeries<RadialBarGraphModel, String>>[
-            RadialBarSeries<RadialBarGraphModel, String>(
-              trackColor: kLightGray,
-              trackOpacity: 0.2,
-              gap: "15%",
-              radius: "80%",
-              innerRadius: "40%",
-              maximumValue: 100,
-              dataSource: <RadialBarGraphModel>[
-                RadialBarGraphModel(
-                    totalCalories * 100 / 1000, 'Calories', kLightRed),
-                RadialBarGraphModel(
-                    totalKms * 100 / 10, 'Total Kms', kLightPurple),
-                RadialBarGraphModel(
-                    totalSteps * 100 / 10000, 'Steps', kLightBlue),
+        FittedBox(
+          child: SizedBox(
+            height: getHeight(context, 30),
+            child: SfCircularChart(
+              series: <RadialBarSeries<RadialBarGraphModel, String>>[
+                RadialBarSeries<RadialBarGraphModel, String>(
+                  trackColor: kLightGray,
+                  trackOpacity: 0.2,
+                  gap: "15%",
+                  radius: "100%",
+                  innerRadius: "50%",
+                  maximumValue: 100,
+                  dataSource: <RadialBarGraphModel>[
+                    RadialBarGraphModel(
+                        totalCalories * 100 / 1000, 'Calories', kLightRed),
+                    RadialBarGraphModel(
+                        totalKms * 100 / 10, 'Total Kms', kLightPurple),
+                    RadialBarGraphModel(
+                        totalSteps * 100 / 10000, 'Steps', kLightBlue),
+                  ],
+                  xValueMapper: (RadialBarGraphModel data, _) => data.xData,
+                  yValueMapper: (RadialBarGraphModel data, _) => data.yData,
+                  pointColorMapper: (RadialBarGraphModel data, _) => data.color,
+                  useSeriesColor: true,
+                  cornerStyle: CornerStyle.bothCurve,
+                ),
               ],
-              xValueMapper: (RadialBarGraphModel data, _) => data.xData,
-              yValueMapper: (RadialBarGraphModel data, _) => data.yData,
-              pointColorMapper: (RadialBarGraphModel data, _) => data.color,
-              useSeriesColor: true,
-              cornerStyle: CornerStyle.bothCurve,
             ),
-          ],
+          ),
         ),
         graphLabel(context),
       ],

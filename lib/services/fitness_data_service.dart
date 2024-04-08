@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:fitness_tracker/model/fitness_data_model.dart';
 import 'package:fitness_tracker/providers/fitness_data_provider.dart';
 import 'package:fitness_tracker/services/notification_service.dart';
+import 'package:fitness_tracker/utils/toast.dart';
 import 'package:health/health.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,22 +13,35 @@ part 'fitness_data_service.g.dart';
 @riverpod
 Stream<void> periodicFitnessDataService(
     PeriodicFitnessDataServiceRef ref) async* {
-  log("herrrr");
-  final periodicStream =
-      Stream.periodic(const Duration(milliseconds: 10000), (index) => index);
+  final periodicStream = Stream.periodic(
+      const Duration(seconds: 10), (index) => null); // Emit void
 
   await for (var _ in periodicStream) {
-    ref.read(fitnessDataServiceProvider);
+    ref.read(fitnessDataServiceProvider(false));
   }
 }
 
 @riverpod
-Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
+Future<FitnessDataModel?> fitnessDataService(
+    FitnessDataServiceRef ref, bool fromApp) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final Health health = Health();
   final notificationService = NotificationServices();
 
   try {
+    log("hit");
+    if (fromApp) {
+      bool isSuccess = await health.requestAuthorization([
+        HealthDataType.STEPS,
+        HealthDataType.DISTANCE_DELTA,
+        HealthDataType.ACTIVE_ENERGY_BURNED
+      ]);
+
+      if (!isSuccess) {
+        showToast("Failed to fetch data");
+        return null;
+      }
+    }
     DateTime endDate = DateTime.now();
     DateTime startDate =
         DateTime(endDate.year, endDate.month, endDate.day, 0, 0, 0);
@@ -88,6 +102,9 @@ Future<FitnessDataModel?> fitnessDataService(FitnessDataServiceRef ref) async {
           totalDistance: totalDistance,
           totalCalories: totalCalories,
         ));
+    if (fromApp) {
+      showToast("Stats Refreshed Successfully!");
+    }
     return FitnessDataModel(
       totalSteps: totalSteps,
       totalDistance: totalDistance,

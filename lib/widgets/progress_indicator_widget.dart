@@ -69,7 +69,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
               const Spacer(),
               Text("${(percent * 100).toStringAsFixed(2)}%",
                   style: appstyle(getHeight(context, 1.6), FontWeight.w600,
-                      color: Color(0xff51bf76))),
+                      color: kLightGreen)),
             ],
           ),
           SizedBox(height: getHeight(context, 0.5)),

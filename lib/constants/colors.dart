@@ -8,5 +8,8 @@ const Color kLightBlue = Color(0xff679cf7);
 Color kLightGray = Colors.grey.shade200;
 const Color kBlack = Colors.black;
 const Color kCharcoal = Color(0xff36454F);
+const Color kLightGreen = Color(0xff51bf76);
+
+
 
 const Color kOffWhite = Color(0xfff4f4f6);

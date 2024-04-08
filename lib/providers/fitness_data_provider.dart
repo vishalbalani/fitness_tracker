@@ -13,4 +13,7 @@ class FitnessData extends _$FitnessData {
   updateState(FitnessDataModel model) {
     state = model;
   }
+
+  valueReset(){
+    state = null;}
 }

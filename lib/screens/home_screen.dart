@@ -1,7 +1,8 @@
 import 'package:fitness_tracker/constants/colors.dart';
 import 'package:fitness_tracker/constants/size.dart';
+import 'package:fitness_tracker/services/auth/logout.dart';
 import 'package:fitness_tracker/services/fitness_data_service.dart';
-import 'package:fitness_tracker/utils/snake_bar.dart';
+import 'package:fitness_tracker/widgets/custom_button.dart';
 import 'package:fitness_tracker/widgets/progress_data_tile.dart';
 import 'package:fitness_tracker/widgets/progress_indicator_widget.dart';
 import 'package:fitness_tracker/widgets/radialbar_graph_widget.dart';
@@ -22,14 +23,15 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
-    ref.read(fitnessDataServiceProvider);
+    requestPermissionForBackgroundTask();
+    ref.read(periodicFitnessDataServiceProvider);
+
     super.initState();
     notificationInitialization();
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.read(periodicFitnessDataServiceProvider);
     final fitnessData = ref.watch(fitnessDataProvider);
     bool fitnessDataNullCheck = fitnessData == null;
 
@@ -41,18 +43,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Stack(children: [
-                  RadialBarGraphWidget(
-                    totalSteps:
-                        fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
-                    totalKms:
-                        fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
-                    totalCalories:
-                        fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: IconButton(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: getWidth(context, 2)),
+                        CustomButton(
+                            onTap: () =>
+                                ref.read(fitnessDataServiceProvider(true)),
+                            width: getWidth(context, 25),
+                            height: getHeight(context, 5),
+                            color: kLightBlue,
+                            text: "Login"),
+                        SizedBox(width: getWidth(context, 2)),
+                        CustomButton(
+                            onTap: () => ref.read(logoutServiceProvider),
+                            width: getWidth(context, 25),
+                            height: getHeight(context, 5),
+                            color: kLightBlue,
+                            text: "Logout"),
+                      ],
+                    ),
+                    IconButton(
                       icon: const Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Icon(
@@ -61,12 +74,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        ref.read(fitnessDataServiceProvider);
-                        showSnackBar(context, "Stats Refreshed Successfully!");
+                        ref.read(fitnessDataServiceProvider(true));
                       },
                     ),
-                  ),
-                ]),
+                  ],
+                ),
+                RadialBarGraphWidget(
+                  totalSteps: fitnessDataNullCheck ? 0 : fitnessData.totalSteps,
+                  totalKms:
+                      fitnessDataNullCheck ? 0 : fitnessData.totalDistance,
+                  totalCalories:
+                      fitnessDataNullCheck ? 0 : fitnessData.totalCalories,
+                ),
                 SizedBox(height: getHeight(context, 4)),
                 ProgressDataTile(
                   totalSteps: fitnessDataNullCheck

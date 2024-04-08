@@ -67,7 +67,8 @@ class ProgressIndicatorWidget extends StatelessWidget {
           Row(
             children: [
               const Spacer(),
-              Text("${(percent * 100).toStringAsFixed(2)}%",
+              Text(
+                  "${((percent * 100) > 100) ? 100 : (percent * 100).toStringAsFixed(2)}%",
                   style: appstyle(getHeight(context, 1.6), FontWeight.w600,
                       color: kLightGreen)),
             ],
@@ -90,8 +91,9 @@ class ProgressIndicatorWidget extends StatelessWidget {
 
   Widget linearGraph(double percent, Color color, BuildContext context) {
     return LinearPercentIndicator(
+      // width: getWidth(context, 60),
       lineHeight: getHeight(context, 1),
-      percent: percent,
+      percent: (percent > 1) ? 1 : percent,
       animationDuration: 1000,
       barRadius: const Radius.circular(10),
       animation: true,

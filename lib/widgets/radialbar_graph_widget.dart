@@ -22,7 +22,6 @@ class RadialBarGraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
         FittedBox(
           child: SizedBox(
@@ -45,7 +44,8 @@ class RadialBarGraphWidget extends StatelessWidget {
                         totalSteps * 100 / 10000, 'Steps', kLightBlue),
                   ],
                   xValueMapper: (RadialBarGraphModel data, _) => data.xData,
-                  yValueMapper: (RadialBarGraphModel data, _) => data.yData,
+                  yValueMapper: (RadialBarGraphModel data, _) =>
+                      (data.yData > 100) ? 100 : data.yData,
                   pointColorMapper: (RadialBarGraphModel data, _) => data.color,
                   useSeriesColor: true,
                   cornerStyle: CornerStyle.bothCurve,

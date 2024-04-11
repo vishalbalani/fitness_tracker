@@ -29,7 +29,7 @@ Before running the application, ensure you have the following installed:
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/yourusername/your-repository.git
+   git clone https://github.com/vishalbalani/fitness_tracker.git
    ```
 
 2. Navigate to the project directory:
